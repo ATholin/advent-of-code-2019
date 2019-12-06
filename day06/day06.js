@@ -8,14 +8,12 @@ const setup = input => {
 
     planets = {}
     arr.forEach(line => {
-        const planet = line[0]
-        const orbiter = line[1]
+        const [planet, orbiter] = line
     
         if (!planets[planet])
             planets[planet] = { name: planet, children: [] }
         if (!planets[orbiter])
             planets[orbiter] = { name: orbiter, children: [] }
-    
         
         planets[planet].children.push(planets[orbiter])
     })
