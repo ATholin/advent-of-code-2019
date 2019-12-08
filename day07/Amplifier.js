@@ -1,4 +1,4 @@
-const IntCode = require('../lib/intcode/intcode')
+const { IntCode } = require('../lib/intcode')
 
 module.exports = class Amplifier extends IntCode {
     nextAmplifier = null
