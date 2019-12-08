@@ -1,54 +1,60 @@
-const { IntCode } = require('../lib/intcode')
+const { IntCode } = require('../lib/intcode');
 
 module.exports = class Amplifier extends IntCode {
     nextAmplifier = null
+
     thruster = null
 
-    connectNextAmplifier = next => this.nextAmplifier = next
+    connectNextAmplifier = (next) => {
+      this.nextAmplifier = next;
+    }
 
-    connectThruster = thruster => this.thruster = thruster
+    connectThruster = (thruster) => {
+      this.thruster = thruster;
+      return this;
+    }
 
     sendToThruster = () => {
-        if (this.output != null) {
-            //console.log(`${this.name}: Sending output ${this.output} to Thruster`)
-            this.sendOutput(this.output, this.thruster)
-        }
+      if (this.output != null) {
+        // console.log(`${this.name}: Sending output ${this.output} to Thruster`)
+        this.sendOutput(this.output, this.thruster);
+      }
 
-        return this
+      return this;
     }
 
     sendToNext = () => {
-        if (this.output != null) {
-            //console.log(`${this.name}: Sending output ${this.output} to ${this.nextAmplifier.name}`)
-            this.sendOutput(this.output, this.nextAmplifier)
-        }
+      if (this.output != null) {
+        // console.log(`${this.name}: Sending output ${this.output} to ${this.nextAmplifier.name}`)
+        this.sendOutput(this.output, this.nextAmplifier);
+      }
 
-        return this
+      return this;
     }
 
-    sendToMultiple = targets => {
-        if (this.output != null) {
-            targets.forEach(target => {
-                //console.log(`${this.name}: Sending output ${this.output} to ${this.nextAmplifier.name}`)
-                target.receive(this.output)
-            })
-        }
+    sendToMultiple = (targets) => {
+      if (this.output != null) {
+        targets.forEach((target) => {
+          // console.log(`${this.name}: Sending ${this.output} to ${this.nextAmplifier.name}`)
+          target.receive(this.output);
+        });
+      }
 
-        this.output = null
-        
-        return this
+      this.output = null;
+
+      return this;
     }
 
     sendOutput = (output, target) => {
-        target.receive(output)
+      target.receive(output);
 
-        this.output = null
+      this.output = null;
 
-        return this
+      return this;
     }
 
-    receive = output => {
-        //console.log(`${this.name}: Received ${this.output} from previous`)
-        this.pushInput(output)
+    receive = (output) => {
+      // console.log(`${this.name}: Received ${this.output} from previous`)
+      this.pushInput(output);
     }
-}
+};
